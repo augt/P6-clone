@@ -33,6 +33,8 @@ exports.createSauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+//this middleware is necessary to prevent users from deleting of modifying other users' sauces.
+
 exports.checkPreviousSauce = (req, res, next) => {
   try{
     Sauce.findOne({ _id: req.params.id }).then((sauce) => {
@@ -40,7 +42,7 @@ exports.checkPreviousSauce = (req, res, next) => {
       throw "Cette sauce n'existe pas !";
     }
     if (req.auth.userId !== sauce.userId) {
-      throw "Requête non autorisée";
+      throw "Requête non autorisée !";
     } else {
       next();
     }
@@ -50,7 +52,7 @@ exports.checkPreviousSauce = (req, res, next) => {
   })
   ;
   } catch (error) {
-    res.status(401).json({ error: error || "Cette action est impossible" });
+    res.status(401).json({ error: error || "Cette action est impossible." });
   }
   
 };
