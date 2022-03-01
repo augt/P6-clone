@@ -2,7 +2,7 @@
 
 ### Description :
 
-This is the 6th project of my training program at OpenClassrooms. The goal was to build a **Node.js** back-end API of an imaginary website that allows people to share their reviews of spicy sauces. The front-end part of the code was already provided.
+This is the 6th project of my training program at OpenClassrooms. The goal was to build a **Node.js** back-end API for an imaginary website that allows people to share their reviews of spicy sauces. The front-end part of the code was already provided.
 
 The database relies on **MongoDB**.
 
