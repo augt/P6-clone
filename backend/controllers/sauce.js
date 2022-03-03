@@ -33,7 +33,7 @@ exports.createSauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//this middleware is necessary to prevent users from deleting of modifying other users' sauces.
+//this middleware is necessary to prevent users from deleting or modifying other users' sauces.
 
 exports.checkPreviousSauce = (req, res, next) => {
   try{
@@ -58,7 +58,7 @@ exports.checkPreviousSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
-  if (req.file) {
+  if (req.file) {         // If the request contains a picture file, the previous picture must be deleted
     Sauce.findOne({ _id: req.params.id })
       .then((sauce) => {
         const filename = sauce.imageUrl.split("/images/")[1];
@@ -70,12 +70,12 @@ exports.modifySauce = (req, res, next) => {
   }
 
   const sauceObject = req.file
-    ? {
+    ? { // If the request constains a picture file, the URL of the image must be modified accordingly
         ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
         }`,
-      }
+      } // otherwise the database can be mofified with the request body as it is
     : { ...req.body };
   Sauce.updateOne(
     { _id: req.params.id },
